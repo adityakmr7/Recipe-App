@@ -21,6 +21,7 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
         screenOptions={{
           headerStyle: {
             elevation: 0,
+            backgroundColor: "#F4FCFF",
           },
           animationEnabled: true,
           headerRight: () => {
@@ -44,7 +45,11 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
           },
         }}
       >
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          options={{ headerTitle: "" }}
+          name="Home"
+          component={HomeScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
