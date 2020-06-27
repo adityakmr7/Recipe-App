@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, Text, ImageBackground, Image } from "react-native";
 import { get_random_recipes } from "../services/api_url";
 import { ScrollView } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { catArr, popularArr } from "../dummy_data/categories_data";
-
 import PopularRecipeScroll from "../components/PopularRecipeScroll";
 import CategoriesScroll from "../components/CategoriesScroll";
 import { TITLE_COLOR, BACKGROUND_COLOR, ICON_COLOR } from "../constants/color";
 import SubTitle from "../components/SubTitle";
 import { height, width } from "../constants/windowSize";
+import { AppContext } from "../context/AppProvider";
 interface HomeScreenProps {}
 
 const useFetch = (url: string) => {
@@ -31,6 +30,8 @@ const useFetch = (url: string) => {
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
   const { loading, data } = useFetch(get_random_recipes); //150 point request daily
+
+  const staticData = useContext(AppContext);
 
   return (
     <ScrollView
@@ -142,15 +143,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-              {catArr.map((item, index) => {
-                return (
-                  <CategoriesScroll
-                    key={item.id}
-                    image={item.image}
-                    name={item.name}
-                  />
-                );
-              })}
+              {staticData.catArr.map(
+                (
+                  item: { id: number; image: any; name: string },
+                  index: number
+                ) => {
+                  return (
+                    <CategoriesScroll
+                      key={item.id}
+                      image={item.image}
+                      name={item.name}
+                    />
+                  );
+                }
+              )}
             </ScrollView>
           </View>
         </View>
@@ -160,17 +166,28 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
         <SubTitle title={"Popular Recipes"} />
         <View>
           <ScrollView>
-            {popularArr.map((item, index) => {
-              return (
-                <PopularRecipeScroll
-                  time={item.time}
-                  level={item.level}
-                  key={item.id}
-                  name={item.name}
-                  image={item.image}
-                />
-              );
-            })}
+            {staticData.popularArr.map(
+              (
+                item: {
+                  time: number;
+                  level: string;
+                  id: number;
+                  name: string;
+                  image: any;
+                },
+                index: number
+              ) => {
+                return (
+                  <PopularRecipeScroll
+                    time={item.time}
+                    level={item.level}
+                    key={item.id}
+                    name={item.name}
+                    image={item.image}
+                  />
+                );
+              }
+            )}
           </ScrollView>
         </View>
       </View>

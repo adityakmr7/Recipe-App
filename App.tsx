@@ -1,7 +1,12 @@
 import React from "react";
 
 import { Routes } from "./src/Routes";
+import { AppProvider } from "./src/context/AppProvider";
 
 export default function App() {
-  return <Routes />;
+  return (
+    <AppProvider>
+      <Routes />
+    </AppProvider>
+  );
 }
