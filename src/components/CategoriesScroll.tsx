@@ -6,12 +6,14 @@ import { width, height } from "../constants/windowSize";
 const CategoriesScroll = ({
   image,
   name,
+  ingredient,
 }: {
   image: ImageSourcePropType;
   name: string;
+  ingredient?: boolean;
 }) => {
   return (
-    <View style={{ paddingHorizontal: 10 }}>
+    <View style={{ paddingHorizontal: 10, height: ingredient ? 130 : 90 }}>
       <ImageBackground
         source={image}
         imageStyle={{ resizeMode: "stretch" }}
@@ -19,7 +21,7 @@ const CategoriesScroll = ({
           overflow: "hidden",
           borderRadius: 20,
           width: width / 4 + 20,
-          height: height / 9,
+          height: "100%",
           justifyContent: "flex-end",
           alignItems: "flex-start",
         }}

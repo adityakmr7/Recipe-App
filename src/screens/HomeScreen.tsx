@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import { View, Text, ImageBackground, Image } from "react-native";
 import { get_random_recipes } from "../services/api_url";
-import { ScrollView } from "react-native-gesture-handler";
+import {
+  ScrollView,
+  TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import PopularRecipeScroll from "../components/PopularRecipeScroll";
@@ -10,26 +13,38 @@ import { TITLE_COLOR, BACKGROUND_COLOR, ICON_COLOR } from "../constants/color";
 import SubTitle from "../components/SubTitle";
 import { height, width } from "../constants/windowSize";
 import { AppContext } from "../context/AppProvider";
-interface HomeScreenProps {}
-
-const useFetch = (url: string) => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  async function fetchData() {
-    const response = await fetch(url);
-    const json = await response.json();
-    setData(json);
-    setLoading(false);
-  }
-  useEffect(() => {
-    fetchData();
-  }, []);
-  return { loading, data };
+import { RouteProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+interface HomeScreenProps {
+  navigation: StackNavigationProp<HomeParam, "Home">;
+  route: RouteProp<HomeParam, "Home">;
+}
+type HomeParam = {
+  Home: undefined;
+  Detail: undefined;
 };
 
-export const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
-  const { loading, data } = useFetch(get_random_recipes); //150 point request daily
+// const useFetch = (url: string) => {
+//   const [data, setData] = useState(null);
+//   const [loading, setLoading] = useState(true);
+
+//   async function fetchData() {
+//     const response = await fetch(url);
+//     const json = await response.json();
+//     setData(json);
+//     setLoading(false);
+//   }
+//   useEffect(() => {
+//     fetchData();
+//   }, []);
+//   return { loading, data };
+// };
+
+export const HomeScreen: React.FC<HomeScreenProps> = ({
+  navigation,
+  route,
+}) => {
+  //const { loading, data } = useFetch(get_random_recipes); //150 point request daily
 
   const staticData = useContext(AppContext);
 
@@ -60,71 +75,86 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
           }}
         >
           {/**? Header App */}
-          <ImageBackground
-            imageStyle={{ resizeMode: "stretch" }}
-            style={{ width: "100%", height: "100%" }}
-            source={require("../../assets/Rectangle.png")}
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate("Detail")}
           >
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            <ImageBackground
+              imageStyle={{ resizeMode: "stretch" }}
+              style={{ width: "100%", height: "100%" }}
+              source={require("../../assets/Rectangle.png")}
             >
-              <View style={{ flex: 1 }}>
-                <View style={{ paddingLeft: 30, paddingTop: 20 }}>
-                  <Text
-                    style={{ fontSize: 30, color: "white", fontWeight: "bold" }}
-                  >
-                    Postickers
-                  </Text>
-                  <Text
-                    style={{ fontSize: 20, color: "white", fontWeight: "bold" }}
-                  >
-                    (Chinese Dumplings)
-                  </Text>
-                  <View style={{ paddingTop: 10 }}>
-                    <Text style={{ color: "white", fontSize: 10 }}>
-                      A authentic potstar Dish Lorem ipsum dolor sit amet. Lorem
-                      ipsum dolor sit amet.
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View style={{ flex: 1 }}>
+                  <View style={{ paddingLeft: 30, paddingTop: 20 }}>
+                    <Text
+                      style={{
+                        fontSize: 30,
+                        color: "white",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Postickers
                     </Text>
-                  </View>
-
-                  <View
-                    style={{
-                      paddingVertical: 15,
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      width: "80%",
-                    }}
-                  >
-                    <View style={{ flex: 1, flexDirection: "row" }}>
-                      <MaterialCommunityIcons
-                        name="chef-hat"
-                        size={15}
-                        color={ICON_COLOR}
-                      />
-                      <Text style={{ color: "white", paddingHorizontal: 5 }}>
-                        Easy
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        color: "white",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      (Chinese Dumplings)
+                    </Text>
+                    <View style={{ paddingTop: 10 }}>
+                      <Text style={{ color: "white", fontSize: 10 }}>
+                        A authentic potstar Dish Lorem ipsum dolor sit amet.
+                        Lorem ipsum dolor sit amet.
                       </Text>
                     </View>
-                    <View style={{ flex: 1, flexDirection: "row" }}>
-                      <MaterialIcons
-                        name="timer"
-                        size={15}
-                        color={ICON_COLOR}
-                      />
-                      <Text style={{ color: "white", paddingHorizontal: 5 }}>
-                        36 min
-                      </Text>
+
+                    <View
+                      style={{
+                        paddingVertical: 15,
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "80%",
+                      }}
+                    >
+                      <View style={{ flex: 1, flexDirection: "row" }}>
+                        <MaterialCommunityIcons
+                          name="chef-hat"
+                          size={15}
+                          color={ICON_COLOR}
+                        />
+                        <Text style={{ color: "white", paddingHorizontal: 5 }}>
+                          Easy
+                        </Text>
+                      </View>
+                      <View style={{ flex: 1, flexDirection: "row" }}>
+                        <MaterialIcons
+                          name="timer"
+                          size={15}
+                          color={ICON_COLOR}
+                        />
+                        <Text style={{ color: "white", paddingHorizontal: 5 }}>
+                          36 min
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
-              </View>
 
-              <View style={{ flex: 1 }}>
-                <Image source={require("../../assets/dumplings.png")} />
+                <View style={{ flex: 1 }}>
+                  <Image source={require("../../assets/dumplings.png")} />
+                </View>
               </View>
-            </View>
-          </ImageBackground>
+            </ImageBackground>
+          </TouchableWithoutFeedback>
         </View>
       </View>
 
@@ -150,6 +180,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
                 ) => {
                   return (
                     <CategoriesScroll
+                      ingredient={false}
                       key={item.id}
                       image={item.image}
                       name={item.name}

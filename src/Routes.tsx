@@ -3,9 +3,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { HomeScreen } from "./screens/HomeScreen";
+import DetailScreen from "./screens/DetailScreen";
 interface RoutesProps {}
 
 {
@@ -49,6 +50,11 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
           options={{ headerTitle: "" }}
           name="Home"
           component={HomeScreen}
+        />
+        <Stack.Screen
+          name={"Detail"}
+          options={{ header: () => null }}
+          component={DetailScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
