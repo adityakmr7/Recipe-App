@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View, Text, ImageBackground, Image } from "react-native";
+import { View, Text, ImageBackground, Image, StatusBar } from "react-native";
 import Center from "../components/Center";
 import { Ionicons } from "@expo/vector-icons";
 import { height } from "../constants/windowSize";
@@ -26,6 +26,7 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ navigation, route }) => {
 
   return (
     <ScrollView>
+      <StatusBar backgroundColor={"black"} />
       <View style={{ flex: 1 }}>
         <ImageBackground
           style={{ width: "100%", height: height / 2 + 50 }}
@@ -34,7 +35,7 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ navigation, route }) => {
         >
           <View
             style={{
-              marginTop: height / 20,
+              marginTop: height / 20 - 20,
               height: "100%",
               flexDirection: "column",
             }}
@@ -66,7 +67,7 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ navigation, route }) => {
       <View style={{ flex: 1, marginTop: -30, marginHorizontal: 4 }}>
         <SubTitle title="Posttickers(Chinese Dumpling)" />
         <View>
-          <Text style={{}}>
+          <Text style={{ color: "grey", letterSpacing: 1 }}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit,
             accusamus ad ipsa voluptatem veritatis distinctio possimus ullam
             dolor debitis necessitatibus?

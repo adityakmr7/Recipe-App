@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { View, Text, ImageBackground, Image } from "react-native";
+import React, { useEffect, useState, useContext, useRef } from "react";
+import { View, Text, ImageBackground, Image, Easing } from "react-native";
 import { get_random_recipes } from "../services/api_url";
 import {
   ScrollView,
@@ -15,6 +15,8 @@ import { height, width } from "../constants/windowSize";
 import { AppContext } from "../context/AppProvider";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import Animated from "react-native-reanimated";
+
 interface HomeScreenProps {
   navigation: StackNavigationProp<HomeParam, "Home">;
   route: RouteProp<HomeParam, "Home">;
@@ -49,7 +51,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
   const staticData = useContext(AppContext);
 
   return (
-    <ScrollView
+    <Animated.ScrollView
       showsVerticalScrollIndicator={false}
       style={{ backgroundColor: BACKGROUND_COLOR, flex: 1 }}
     >
@@ -69,7 +71,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         <View
           style={{
             height: "100%",
-            // marginHorizontal: 20,
+            // marginHorizontal: 20,transform: [{ translateX: -100 }]
             marginVertical: 10,
             borderRadius: 10,
           }}
@@ -89,7 +91,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                   justifyContent: "space-between",
                 }}
               >
-                <View style={{ flex: 1 }}>
+                <Animated.View
+                  style={[
+                    { flex: 1 },
+                    {
+                      transform: [{}],
+                    },
+                  ]}
+                >
                   <View style={{ paddingLeft: 30, paddingTop: 20 }}>
                     <Text
                       style={{
@@ -147,7 +156,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                       </View>
                     </View>
                   </View>
-                </View>
+                </Animated.View>
 
                 <View style={{ flex: 1 }}>
                   <Image source={require("../../assets/dumplings.png")} />
@@ -222,6 +231,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           </ScrollView>
         </View>
       </View>
-    </ScrollView>
+    </Animated.ScrollView>
   );
 };
